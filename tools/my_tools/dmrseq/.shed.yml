@@ -1,0 +1,6 @@
+categories:
+- Epigenetics
+description: 'dmrseq: Differentially methylated regions analysis'
+long_description: Differentially methylated regions analysis using the R package dmrseq.
+name: dmrseq
+owner: jobucher

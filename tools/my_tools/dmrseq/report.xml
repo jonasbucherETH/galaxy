@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="planemo-update"
+           tests="1"
+           errors="0"
+           failures="1"
+           skip="0">
+    
+    <testcase classname="dmrseq" name="shed-update" time="70.97792887687683">
+        
+            <error type="planemo.FailedUpdate" message="Failed to update repository">
+                
+            </error>
+        
+        <system-out>
+        
+        </system-out>
+        <system-err>
+        
+        </system-err>
+    </testcase>
+    
+</testsuite>

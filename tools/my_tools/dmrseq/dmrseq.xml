@@ -1,0 +1,239 @@
+<tool id="dmrseq" name="dmrseq: Differentially methylated regions analysis" version="0.1.0+galaxy0" profile="21.05">
+    <requirements>
+        <requirement type="package" version="4.3.0">r-base</requirement>
+        <requirement type="package" version="1.20.3">r-getopt</requirement>
+        <requirement type="package" version="1.38.0">bioconductor-bsseq</requirement>
+        <requirement type="package" version="1.22.0">bioconductor-dmrseq</requirement>
+        <requirement type="package" version="1.15.4">r-data.table</requirement>
+        <requirement type="package" version="1.62.0">bioconductor-rtracklayer</requirement>
+        <requirement type="package" version="2.70.1">bioconductor-biostrings</requirement>
+        <requirement type="package" version="1.12.0">bioconductor-biocio</requirement>
+        <requirement type="package" version="1.7.5">r-optparse</requirement>
+    </requirements>
+    <required_files>
+        <include path="dmrseq.R" />
+    </required_files>
+
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+
+    <command detect_errors="exit_code"><![CDATA[
+
+        Rscript '$__tool_directory__/dmrseq.R'
+        --input "${",".join(map(str, $coverage_files))}"
+        --identifier "${','.join(c.element_identifier for c in $coverage_files)}"
+        --cytosine_context '$cytosine_context'
+        --test_covariate '$test_covariate'
+        --reference_group '$reference_group'
+        --adjust_covariate '$adjust_covariate'
+        --cutoff '$cutoff'
+        --sample_info_file '$sample_info_file'
+        --sample_id_col '$sample_id_col'
+        --output '$outputRDS'
+        --tabular_regions '$tabular_regions'
+        --tabular_hypo '$tabular_hypo'
+        --tabular_hyper '$tabular_hyper'
+
+        #if '$advanced_options' == 'true':
+            #if '$minNumRegion' != '':
+                --min_num_region '$minNumRegion'
+            #end if
+
+            #if '$smooth' == 'true':
+                --smooth '$smooth'
+                #if '$bpSpan' != '':
+                    --bp_span '$bpSpan'
+                #end if
+                #if '$minInSpan' != '':
+                    --min_in_span '$minInSpan'
+                #end if
+                #if '$maxGapSmooth' != '':
+                    --max_gap_smooth '$maxGapSmooth'
+                #end if
+            #end if
+            #if '$maxGap' != '':
+                --max_gap '$maxGap'
+            #end if
+            #if '$maxPerms' != '':
+                --max_perms '$maxPerms'
+            #end if
+            #if '$matchCovariate' != '':
+                --match_covariate '$matchCovariate'
+            #end if
+            #if '$stat' != '':
+                --stat '$stat'
+            #end if
+            #if '$block' == 'true':
+                --block '$block'
+            #end if
+            #if '$blockSize' != '':
+                --block_size '$blockSize'
+            #end if
+            #if '$chrsPerChunk' != '':
+                --chrs_per_chunk '$chrsPerChunk'
+            #end if      
+        #end if
+        
+    ]]></command>
+    <inputs>
+        <!--
+         <conditional name="coverage_input">
+            <param name="coverage_input_selector" type="select" label="Single or Paired-end reads" help="Select between paired and single end data">
+                <option value="paired">Paired</option>
+                <option value="single">Single</option>
+                <option value="paired_collection">Paired Collection</option>
+                <option value="paired_iv">Paired Interleaved</option>
+            </param>
+            <when value="paired">
+                <param name="coverage_input1" type="data" format="coveragesanger,coveragesanger.gz,fasta" label="Select first set of reads" help="Specify dataset with forward reads"/>
+                <param name="coverage_input2" type="data" format="coveragesanger,coveragesanger.gz,fasta" label="Select second set of reads" help="Specify dataset with reverse reads"/>
+                <param name="iset_stats" type="text" optional="True" label="Enter mean, standard deviation, max, and min for insert lengths." help="-I; This parameter is only used for paired reads. Only mean is required while sd, max, and min will be inferred. Examples: both &quot;250&quot; and &quot;250,25&quot; will work while &quot;250,,10&quot; will not. See below for details.">
+                    <sanitizer invalid_char="">
+                      <valid initial="string.digits"><add value=","/> </valid>
+                    </sanitizer>
+                </param>
+            </when>
+            <when value="single">
+                <param name="coverage_input1" type="data" format="coveragesanger,coveragesanger.gz,fasta" label="Select coverage dataset" help="Specify dataset with single reads"/>
+            </when>
+            <when value="paired_collection">
+                <param name="coverage_input1" format="coveragesanger,coveragesanger.gz,fasta" type="data_collection" collection_type="paired" label="Select a paired collection" help="See help section for an explanation of dataset collections"/>
+                <param name="iset_stats" type="text" optional="True" label="Enter mean, standard deviation, max, and min for insert lengths." help="-I; This parameter is only used for paired reads. Only mean is required while sd, max, and min will be inferred. Examples: both &quot;250&quot; and &quot;250,25&quot; will work while &quot;250,,10&quot; will not. See below for details.">
+                    <sanitizer invalid_char="">
+                        <valid initial="string.digits"><add value=","/> </valid>
+                    </sanitizer>
+                </param>
+            </when>
+            <when value="paired_iv">
+                <param name="coverage_input1" type="data" format="coveragesanger,coveragesanger.gz,fasta" label="Select coverage dataset" help="Specify dataset with interleaved reads"/>
+                <param name="iset_stats" type="text" optional="True" label="Enter mean, standard deviation, max, and min for insert lengths." help="-I; This parameter is only used for paired reads. Only mean is required while sd, max, and min will be inferred. Examples: both &quot;250&quot; and &quot;250,25&quot; will work while &quot;250,,10&quot; will not. See below for details.">
+                    <sanitizer invalid_char="">
+                        <valid initial="string.digits"><add value=","/> </valid>
+                    </sanitizer>
+                </param>
+            </when>
+        </conditional>
+        <param name="coverage_files" type="data_collection" collection_type="list" label="Bismark coverage files" help="Collection of coverage files from Bismark methylation extractor" />
+        
+        <param name="coverage_files" type="data" multiple="true" format="cov" help="Collection of coverage files from Bismark methylation extractor" />
+        -->
+        <param name="cytosine_context" type="select" value="CG" label="Cytosine context" help="Cytosine methylation context to analyse" >
+            <option value="CG">C(p)G</option>
+            <option value="CHG">CHG</option>
+            <option value="CHH">CHH</option>
+        </param>
+        <param name="coverage_files" type="data" multiple="true" format="tabular.gz,tabular,txt,txt.gz" label="Bismark coverage files" help="Collection of coverage files from Bismark methylation extractor" />
+        <!--
+        <param name="coverage_files" type="data_collection" collection_type="list" label="Input Files Collection" />
+        
+        <param type="data" name="reference_genome" format="fasta" label="Select reference genome" help="Choose the reference genome file from your history for the analysis." />
+        -->
+        <param name="test_covariate" type="text" label="Test covariate column name" help="Column name in sample info file to use as test covariate" optional="false"/>
+        <param name="reference_group" type="text" label="Reference group name as it appears in the chosen test covariate column. Used for definition of reference regarding hypo-/hyper-methylation." help="Reference group name of test covariate" optional="false"/>
+        <param name="cutoff" type="float" value="0.10" label="Cutoff value" help="Cutoff value to discover candidate regions">
+            <validator type="in_range"
+                  message="Minimum 0 and maximum 1" min="0" max="1"/>
+        </param>
+        <param name="sample_info_file" type="data" format="tabular" label="Sample information file" help="CSV file with sample characteristics"/>
+        <param name="sample_id_col" type="text" label="Sample ID column name" help="Column name in sample info file that matches input file names" optional="false"/>
+        <param name="adjust_covariate" type="text" optional="true" label="Adjustment covariate column name" help="Optional: Column name in sample info file to use as adjustment covariate"/>
+        <conditional name="advanced_parameters">
+            <param name="advanced_options" type="select" label="Show advanced options?" help="Select 'Yes' to set additional advanced parameters.">
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+            </param>
+            <when value="true">
+            <!-- Additional parameters to show when the checkbox is checked -->
+            <param name="minNumRegion" type="integer" value="5" label="Minimum number of regions" help="Minimum number of regions." />
+            <conditional name="smoothing_parameters">
+                <param name="smooth" type="select" value="true" label="Smooth the C-Methylation level signal" help="Choose 'Yes' to smooth the CpG level signal when discovering candidate regions.">
+                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+                </param>
+                <when value="true">
+                    <param name="bpSpan" type="integer" value="1000" label="Length (bp) of the smoothing span window" help="A positive integer that represents the length in basepairs of the smoothing span window if smooth is TRUE. Default value is 1000." />
+                    <param name="minInSpan" type="integer" value="30" label="Minimum number of CpGs in smoothing span window" help="Positive integer that represents the minimum number of CpGs in a smoothing span window if smooth is TRUE. Default value is 30." />
+                    <param name="maxGapSmooth" type="integer" value="2500" label="Maximum number of basepairs between neighboring CpGs for smoothing" help="Integer value representing the maximum number of basepairs between neighboring CpGs to be included in the same cluster when performing smoothing. Default value is 2500." />
+                </when>
+                <when value="false">
+                    <!-- No additional parameters needed when smooth is false -->
+                </when>
+            </conditional>
+            
+            <param name="maxGap" type="integer" value="1000" label="Maximum number of basepairs between neighboring CpGs to be in same region" help="integer value representing maximum number of basepairs in between neighboring CpGs to be included in the same DMR." />                
+            <param name="maxPerms" type="integer" value="10" label="Maximum number of permutations" help="a positive integer that represents the maximum number of permutations that will be used to generate the global null distribution of test statistics. Default value is 10." />
+            <param name="matchCovariate" type="text" value="" label="Matching covariate (column name) for association testing" help="An (optional) character value indicating which variable (column name) of pData(bs) will be blocked for when constructing the permutations in order to test for the association of methylation value with the testCovariate, only to be used when testCovariate is a two-group factor and the number of permutations possible is less than 500000. Alternatively, you can specify an integer value indicating which column of pData(bs) to block for. Blocking means that only permutations with balanced composition of testCovariate values will be used (for example if you have samples from different gender and this is not your covariate of interest, it is recommended to use gender as a matching covariate to avoid one of the permutations testing entirely males versus females; this violates the null hypothesis and will decrease power). If not NULL (default), then no blocking is performed." />               
+            <param name="stat" type="select" value="stat" label="Region-level test statistic" help="Select the column name of the output to use as the region-level test statistic. Default is 'stat', which is designed to be comparable across the genome. It is not recommended to change this argument, but it can be done for experimental purposes.">
+                <option value="stat">stat - the test statistic for the region</option>
+                <option value="L">L - the number of loci in the region</option>
+                <option value="area">area - the sum of the smoothed loci statistics</option>
+                <option value="beta">beta - the effect size of the region</option>
+                <option value="avg">avg - the average smoothed loci statistic</option>
+            </param>
+            <conditional name="block_parameters">
+                <param name="block" type="select" value="false" label="Search for large-scale blocks of differential methylation" help="Choose 'Yes' to search for large-scale (low resolution) blocks of differential methylation. Default is 'No', meaning that local DMRs are desired.">
+                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+                </param>
+                <when value="true">
+                    <param name="blockSize" type="integer" value="5000" label="Minimum block size" help="Minimum number of basepairs to be considered a block." />
+                </when>
+                <when value="false">
+                    <!-- blockSize parameter is not shown when block is false -->
+                </when>
+            </conditional>
+            <param name="chrsPerChunk" type="integer" value="1" label="Number of chromosomes per chunk" help="a positive integer value indicating the number of chromosomes per chunk. The default is 1, meaning that the data will be looped through one chromosome at a time. When pairing up multiple chromosomes per chunk, sizes (in terms of numbers of CpGs) will be taken into consideration to balance the sizes of each chunk." />              
+
+                <!-- Add more advanced parameters as needed -->
+
+            </when>
+            <when value="false">
+                <!-- You can optionally define a different set of parameters or leave it empty -->
+            </when>
+        </conditional>        
+        <!--
+        <param name="reference_group" type="text" label="Control group" help="Control group label in the test covariate column"/>
+        to add in command:
+        -r '$reference_group'
+        -->
+    </inputs>
+    <outputs>
+        <data name="outputRDS" format="rdata" label="${tool.name} on ${on_string}: DMRseq results (RDS)"
+            from_work_dir="output.rds">
+            <discover_datasets pattern="__designation__" directory="output" visible="true" />
+        </data>
+        <data name="tabular_regions" format="tsv" label="${tool.name} on ${on_string}: All regions (TSV)"/>
+        <data name="tabular_hypo" format="tsv" label="${tool.name} on ${on_string}: Hypomethylated regions (TSV)"/>
+        <data name="tabular_hyper" format="tsv" label="${tool.name} on ${on_string}: Hypermethylated regions (TSV)"/>
+        
+        <!-- 
+        <data name="dmr_results" format="tabular" label="${tool.name} on ${on_string}: DMR results"/>
+        <data name="summary_stats" format="tabular" label="${tool.name} on ${on_string}: Summary statistics"/>
+        <data name="diagnostic_plot" format="pdf" label="${tool.name} on ${on_string}: Diagnostic plot"/>
+        -->
+    </outputs>
+    <tests>
+        <test> 
+            <param name="coverage_files" value="F-SRR12865062_bismark_bt2.bismark.cov.gz,F-SRR12865063_bismark_bt2.bismark.cov.gz,F-SRR12865064_bismark_bt2.bismark.cov.gz,G-SRR12865070_bismark_bt2.bismark.cov.gz,G-SRR12865071_bismark_bt2.bismark.cov.gz,G-SRR12865072_bismark_bt2.bismark.cov.gz" ftype="tabular"/>
+            <param name="cytosine_context" value="CG"/>
+            <param name="test_covariate" value="Factor Value[Spaceflight]"/>
+            <param name="cutoff" value="0.10"/>
+            <param name="sample_info_file" value="test-runsheet.csv"/>
+            <param name="sample_id_col" value="Sample Name"/>
+            <param name="adjust_covariate" value=""/>
+            <output name="outputRDS" file="output.rds" compare="sim_size" delta="100" count="1"/>
+            <output name="tabular_regions" file="tabular_regions.tsv"/>
+            <output name="tabular_hypo" file="tabular_hypo.tsv"/>
+            <output name="tabular_hyper" file="tabular_hyper.tsv"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+    dmrseq test easy
+    ]]></help>
+    <citations>
+        <citation type="doi">
+            10.1093/biostatistics/kxy007
+        </citation>
+    </citations>
+</tool>
