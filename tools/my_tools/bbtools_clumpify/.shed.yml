@@ -1,0 +1,6 @@
+categories:
+- Fastq Manipulation
+description: 'BBTools clumpify: Compression and deduplication.'
+long_description: 'BBTools clumpify: Compression and deduplication of fastq files.'
+name: bbtools_clumpify
+owner: jobucher
