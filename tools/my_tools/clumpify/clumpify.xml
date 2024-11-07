@@ -1,0 +1,187 @@
+<tool id="clumpify" name="BBMap Clumpify: Deduplication" version="0.1.0+galaxy0" python_template_version="3.5" profile="21.05">
+    <requirements>
+        <requirement type="package" version="38.84">bbmap</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+
+        #import re
+
+        #if $singlePaired.sPaired == "single"
+            #set read1 = re.sub('[^\w\-_.]', '_', str($singlePaired.input_singles.element_identifier))
+            ln -s '${singlePaired.input_singles}' '${read1}' &&
+            ##set output1 = 'clumpified_' + read1
+            #set output1 = 'clumpified_read.fastq.gz'
+            ##ln -s '${ouput_single}' '${output1}' &&
+            clumpify.sh in='${read1}' out='${output1}' groups=auto
+            #if $parameter_selection.use_sequencing_platform == "true"
+                $parameter_selection.sequencing_platform
+            #else
+                dupedist='$parameter_selection.dupedist'
+                #if $parameter_selection.spany == "true"
+                    spany=t
+                #else
+                    spany=f
+                #end if
+                #if $parameter_selection.adjacent == "true"
+                    adjacent=t
+                #else
+                    adjacent=f
+                #end if
+            #end if
+
+            #if $advanced_parameters.use_advanced_options == "true"
+                #if $advanced_parameters.dedupe == "true"
+                    dedupe=t
+                #else
+                    dedupe=f
+                #end if
+                #if $advanced_parameters.optical == "true"
+                    optical=t
+                #else
+                    optical=f
+                #end if
+            #end if  
+        #else
+            #set read1 = re.sub('[^\w\-_.]', '_', str($singlePaired.input_mate1.element_identifier))
+            #set read2 = re.sub('[^\w\-_.]', '_', str($singlePaired.input_mate2.element_identifier))
+            ln -s '${singlePaired.input_mate1}' '${read1}' &&
+            ln -s '${singlePaired.input_mate2}' '${read2}' &&
+            #set output1 = 'clumpified_read1.fastq.gz'
+            #set output2 = 'clumpified_read2.fastq.gz'
+            clumpify.sh in='${read1}' in2='${read2}' out='${output1}' out2='${output2}' groups=auto
+            #if $parameter_selection.use_sequencing_platform == "true"
+                $parameter_selection.sequencing_platform
+            #else
+                dupedist='$parameter_selection.dupedist'
+                #if $parameter_selection.spany == "true"
+                    spany=t
+                #else
+                    spany=f
+                #end if
+                #if $parameter_selection.adjacent == "true"
+                    adjacent=t
+                #else
+                    adjacent=f
+                #end if
+            #end if
+
+            #if $advanced_parameters.use_advanced_options == "true"
+                #if $advanced_parameters.dedupe == "true"
+                    dedupe=t
+                #else
+                    dedupe=f
+                #end if
+                #if $advanced_parameters.optical == "true"
+                    optical=t
+                #else
+                    optical=f
+                #end if
+            #end if  
+        #end if
+        
+
+    ]]></command>
+    <inputs>
+        <conditional name="singlePaired">
+            <param name="sPaired" type="select" label="Is this library mate-paired?">
+                <option value="single">
+                    Single-end
+                </option>
+                <option value="paired">
+                    Paired-end
+                </option>
+            </param>
+            <when value="single">
+                <param name="input_singles" type="data"
+                       format="fastqsanger,fastqillumina,fastq,fasta,fastq.gz,fastqsanger.gz" label="FASTQ/FASTA file"
+                       help="FASTQ or FASTA files."/>
+            </when>
+            <when value="paired">    
+                <param name="input_mate1" type="data" format="fastqsanger,fastqillumina,fastq,fasta,fastq.gz,fastqsanger.gz" label="Mate pair 1" help="FASTQ or FASTA files."/>
+                <param name="input_mate2" type="data" format="fastqsanger,fastqillumina,fastq,fasta,fastq.gz,fastqsanger.gz" label="Mate pair 2" help="FASTQ or FASTA files."/>
+            </when>
+        </conditional>
+        <conditional name="parameter_selection">
+            <param name="use_sequencing_platform" type="select" label="Specify sequencing platform?" value="true" help="Check this box to specify the sequencing platform, or uncheck to manually set individual parameters." >
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </param>
+            <when value="true">
+                <param name="sequencing_platform" type="select" label="Specify sequencing platform used to obtain data">
+                    <option value="dupedist=40" selected="true">HiSeq 1T / HiSeq 2500</option>
+                    <option value="dupedist=2500">HiSeq 3k / HiSeq 4k</option>
+                    <option value="spany=t adjacent=t dupedist=12000">Novaseq / X-patterned flowcell</option>
+                    <option value="spany=t adjacent=t dupedist=40">NextSeq</option>
+                    <option value="dupedist=40">Other</option>         
+                </param>
+            </when>
+            <when value="false">
+                <param name="dupedist" type="integer" label="Duplication Distance (dupedist)" value="40" help="Specify the duplication distance." />
+                <param name="spany" type="boolean" label="Spany" value="false" help="Enable spany (spany=t)." />
+                <param name="adjacent" type="boolean" label="Adjacent" value="false" help="Enable adjacent (adjacent=t)." />
+            </when>
+        </conditional>
+        <conditional name="advanced_parameters">
+            <param name="use_advanced_options" type="select" label="Show additional options?" value="false" help="Check this box to set additional advanced parameters." >
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+            </param>
+            <when value="true">
+                <param name="dedupe" type="boolean" label="Dedupe" value="true" help="Specify whether to perform deduplication." />
+                <param name="optical" type="boolean" label="Optical" value="true" help="Specify whether to consider optical duplicates." />
+            </when>
+            <when value="false">
+                <!-- No additional parameters needed when smooth is false -->
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <!-- Define possible single-end output -->
+        <data name="output_single" format="fastq.gz" from_work_dir="clumpified_read.fastq.gz"
+            label="Clumpify Output: ${singlePaired.input_singles.element_identifier}" >
+            <filter>
+                singlePaired['sPaired'] == "single"
+            </filter>
+        </data>
+
+        <!-- Define possible paired-end outputs -->
+        <data name="paired_output1" format="fastq.gz" from_work_dir="clumpified_read1.fastq.gz" 
+            label="Clumpify Output: ${singlePaired.input_mate1.element_identifier}">
+            <filter>
+                singlePaired['sPaired'] == "paired"
+            </filter>
+        </data>
+        <data name="paired_output2" format="fastq.gz" from_work_dir="clumpified_read2.fastq.gz" 
+            label="Clumpify Output: ${singlePaired.input_mate2.element_identifier}">
+            <filter>
+                singlePaired['sPaired'] == "paired"
+            </filter>
+        </data>
+    </outputs>
+    <tests>
+        <!-- Test for single-end input -->
+        <test expect_num_outputs="1">
+            <param name="sPaired" value="single"/>
+            <param name="input_singles" value="test-data/single_end.fastq.gz"/>
+            <param name="use_sequencing_platform" value="true"/>
+            <param name="sequencing_platform" value="dupedist=40"/>
+            <param name="use_advanced_options" value="false"/>
+            <output name="output_single" file="clumpify_output_input1.fastq.gz" count="1" />
+        </test>
+
+    </tests>
+    <help><![CDATA[
+    dedup test update
+    ]]></help>
+    <citations>
+        <citation type="bibtex">
+            @misc{githubclumpify.sh,
+            author = {LastTODO, FirstTODO},
+            year = {TODO},
+            title = {clumpify.sh},
+            publisher = {GitHub},
+            journal = {GitHub repository},
+            url = {https://github.com/BioInfoTools/BBMap/blob/master/sh/clumpify.sh},
+        }</citation>
+    </citations>
+</tool>
