@@ -1,0 +1,7 @@
+categories:
+- Genome annotation
+description: 'rGREAT: Genomic Regions Enrichment of Annotations Tool.'
+long_description: 'rGREAT: Genomic Regions Enrichment of Annotations Tool. Functional
+  enrichment analysis directly performed on genomic regions.'
+name: rgreat
+owner: jobucher

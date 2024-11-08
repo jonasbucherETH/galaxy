@@ -1,0 +1,133 @@
+<tool id="rgreat" name="Genomic Regions Enrichment of Annotations Tool" version="0.1.0+galaxy0" profile="21.05">
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <requirements>
+        <requirement type="package" version="4.3.0">r-base</requirement>
+        <requirement type="package" version="1.20.3">r-getopt</requirement>
+        <requirement type="package" version="1.15.4">r-data.table</requirement>
+        <requirement type="package" version="2.4.0">bioconductor-rgreat</requirement>
+        <requirement type="package" version="1.42.0">bioconductor-keggrest</requirement>
+        <requirement type="package" version="1.0.7">r-biomartr</requirement>
+        <requirement type="package" version="0.99.11">bioconductor-biomartgogenesets</requirement>
+        <requirement type="package" version="1.54.1">bioconductor-genomicranges</requirement>
+        <requirement type="package" version="1.2.11">bioconductor-genomeinfodbdata</requirement>
+        <requirement type="package" version="1.34.0">bioconductor-genomationdata</requirement>
+    </requirements>
+
+    <required_files>
+        <include path="rgreat.R" />
+    </required_files>
+
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+
+    <command detect_errors="exit_code"><![CDATA[
+
+        Rscript '$__tool_directory__/rgreat.R'
+        --input '$input'
+        --output_hypo '$output_hypo'
+        --output_hyper '$output_hyper'
+        --biomart_dataset '$biomart_dataset'
+        #if $advanced_parameters.advanced_options
+            --min_gene_set_size $advanced_parameters.min_gene_set_size
+            --mode $advanced_parameters.gene_extension_mode.mode
+            #if $advanced_parameters.gene_extension_mode.mode == 'basalPlusExt'
+                --basal_upstream $advanced_parameters.gene_extension_mode.basal_upstream
+                --basal_downstream $advanced_parameters.gene_extension_mode.basal_downstream
+            #end if
+            --extend_from $advanced_parameters.extend_from
+            --extension $advanced_parameters.extension
+            #if $advanced_parameters.exclude
+                --exclude '$advanced_parameters.exclude'
+            #end if
+        #end if
+
+    ]]></command>
+
+
+    <inputs>
+        <param type="data" name="input" format="rds" />
+        <param name="cytosine_context" type="select" value="CG" label="Cytosine context" help="Cytosine methylation context to analyse" >
+            <option value="CG">C(p)G</option>
+            <option value="CHG">CHG</option>
+            <option value="CHH">CHH</option>
+        </param>
+        <!--
+        <param name="biomart_dataset" type="select" label="Select organism and dataset" help="Choose the organism and corresponding dataset from BioMartGOGeneSets">
+            <expand macro="biomart" />
+        </param>
+        -->
+        <param name="biomart_dataset" type="select" label="Select organism and dataset" help="Choose the organism and corresponding dataset from BioMartGOGeneSets">
+            <options from_data_table="biomart_datasets" />
+        </param>
+        <conditional name="advanced_parameters">
+            <param name="advanced_options" type="select" value="false" label="Show advanced options?" help="Check this box to set additional advanced parameters.">
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+            </param>      
+            <when value="true">
+                <param name="min_gene_set_size" type="integer" value="10" min="1" label="Minimal size of gene sets" help="Minimal size of gene sets to be considered in the analysis." />
+                <conditional name="gene_extension_mode">
+                    <param name="mode" type="select" label="Mode to extend genes">
+                        <option value="basalPlusExt">Basal Plus Extension</option>
+                        <option value="twoClosest">Two Closest</option>
+                        <option value="oneClosest">One Closest</option>
+                    </param>
+                    <when value="basalPlusExt">
+                        <param name="basal_upstream" type="integer" value="5000" min="0" label="Basal upstream extension" help="Number of base pairs extending to the upstream of TSS to form the basal domains." />
+                        <param name="basal_downstream" type="integer" value="1000" min="0" label="Basal downstream extension" help="Number of base pairs extending to the downstream of TSS to form the basal domains." />
+                    </when>
+                    <when value="twoClosest" />
+                    <when value="oneClosest" />
+                </conditional>
+                <param name="extend_from" type="select" label="Extend gene from">
+                    <option value="tss">TSS only</option>
+                    <option value="complete">Complete gene</option>
+                </param>
+                <param name="extension" type="integer" value="1000000" min="0" label="Extension from basal domains" help="Extensions from the basal domains." />    
+                <param name="exclude" type="text" area="true" optional="true" label="Excluded regions" help="Regions that are excluded from analysis such as gap regions. The value can also be a vector of chromosome names. Use 'gap' to remove gap regions for the corresponding organism." >
+                    <validator type="regex" message="Use 'gap' or provide a list of chromosome names">
+                        ^(gap|(\w+,?\s*)+)$
+                    </validator>
+                </param>
+            </when>
+            <when value="false" />
+        </conditional>
+    </inputs>
+    <outputs>
+        <data name="output_hypo" format="rds" label="Output hypo-methyla: ${cytosine_context} context" />
+        <data name="output_hyper" format="rds" label="Output hyper: ${cytosine_context} context" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input" value="dmrseq_output.rdata"/>
+            <param name="cytosine_context" value="CG"/>
+            <param name="biomart_dataset" value="hsapiens_gene_ensembl"/>
+            <param name="advanced_options" value="true"/>
+            <param name="min_gene_set_size" value="15"/>
+            <param name="mode" value="basalPlusExt"/>
+            <param name="basal_upstream" value="5000"/>
+            <param name="basal_downstream" value="1000"/>
+            <param name="extend_from" value="tss"/>
+            <param name="extension" value="1000000"/>
+            <param name="exclude" value="gap"/>
+            <output name="output_hypo" file="output_hypo.rds"/>
+            <output name="output_hyper" file="output_hyper.rds"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+        scream for help
+
+    ]]></help>
+    <citations>
+        <citation type="bibtex">@Article{,
+                title = {rGREAT: an R/Bioconductor package for functional enrichment on genomic regions},
+                author = {Zuguang Gu and Daniel Huebschmann},
+                journal = {Bioinformatics},
+                year = {2022},
+                doi = {10.1093/bioinformatics/btac745},
+            }</citation>
+    </citations>
+</tool>
