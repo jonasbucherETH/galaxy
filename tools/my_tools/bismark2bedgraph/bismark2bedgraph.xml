@@ -1,0 +1,53 @@
+<tool id="bismark2bedgraph" name="Bismark to BedGraph" version="0.1.0+galaxy0" profile="21.05">
+    <description>Converts Bismark methylation extractor output to bedGraph and coverage files.</description>
+    <requirements>
+        <requirement type="package" version="0.24.2">bismark</requirement>
+        <requirement type="package" version="1.8">samtools</requirement>
+        <requirement type="package" version="2.4.4">bowtie2</requirement>
+    </requirements>
+
+    <command><![CDATA[
+        python  '$__tool_directory__/bismark2bedgraph_wrapper.py' 
+                --output '$output'
+                --output_bedgraph '$output_bedgraph'
+                --output_coverage '$output_coverage'
+                --cytosine_context '$cytosine_context'
+                --input_files '$input_files'
+
+        ]]>
+    </command>
+
+    <inputs>
+        <param name="input_files" type="data" multiple="true" label="Bismark Extractor Output File" format="txt"/>
+        <param name="cytosine_context" type="select" label="Select Methylation Context" help="Choose the methylation context to process">
+            <option value="CpG">CpG</option>
+            <option value="CHG">CHG</option>
+            <option value="CHH">CHH</option>
+        </param>        
+        <param name="output" type="text" label="Output File Prefix" help="Prefix for the output bedGraph and coverage files" />
+    </inputs>
+
+    <outputs>
+        <data name="output_bedgraph" format="gz" label="bedgraph.gz" />
+        <data name="output_coverage" format="tabular.gz" label="coverage.gz" />
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="input_files" value="test_data/methylation_extractor_output.txt" />
+            <param name="output" value="test_output" />
+            <param name="cytosine_context" value="CHH" />
+            <output name="output_bedgraph" file="CHH_context.gz" ftype="gz"/>
+            <output name="output_coverage" file="CHH_context.gz.bismark.cov.gz" ftype="tabular.gz"/>
+        </test>
+    </tests>
+
+    <help>
+        This tool converts the context-dependent methylation extractor output from Bismark into bedGraph and coverage files.
+        The tool runs the bismark2bedGraph script. For more details, refer to the Bismark documentation.
+    </help>
+
+    <citations>
+        <citation type="doi">10.1093/bioinformatics/btr167</citation>
+    </citations>
+</tool>

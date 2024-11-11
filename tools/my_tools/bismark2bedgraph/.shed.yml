@@ -1,0 +1,7 @@
+categories:
+- Epigenetics
+description: Bismark methylation extractor output to bedGraph conversion.
+long_description: Converts Bismark methylation extractor output to bedGraph and coverage
+  files.
+name: bismark2bedgraph
+owner: jobucher
