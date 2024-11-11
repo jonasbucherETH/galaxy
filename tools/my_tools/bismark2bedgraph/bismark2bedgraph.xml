@@ -7,7 +7,7 @@
     </requirements>
 
     <command><![CDATA[
-        python  '$__tool_directory__/bismark2bedgraph_wrapper.py' 
+        python  '$__tool_directory__/bismark2bedgraph.py' 
                 --output '$output'
                 --output_bedgraph '$output_bedgraph'
                 --output_coverage '$output_coverage'
