@@ -54,14 +54,19 @@
             <option value="CHG">CHG</option>
             <option value="CHH">CHH</option>
         </param>
-        <!--
+        
         <param name="biomart_dataset" type="select" label="Select organism and dataset" help="Choose the organism and corresponding dataset from BioMartGOGeneSets">
             <expand macro="biomart" />
         </param>
-        -->
+        
+        <!--
         <param name="biomart_dataset" type="select" label="Select organism and dataset" help="Choose the organism and corresponding dataset from BioMartGOGeneSets">
-            <options from_data_table="biomart_datasets" />
+            <options from_data_table="biomart_datasets">
+                <column name="name" index="0"/>
+                <column name="value" index="1"/>
+            </options>
         </param>
+        -->
         <conditional name="advanced_parameters">
             <param name="advanced_options" type="select" value="false" label="Show advanced options?" help="Check this box to set additional advanced parameters.">
                 <option value="false">No</option>

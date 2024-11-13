@@ -1,14 +1,13 @@
-#value	name
-aastaci_eg_gene	Saccharomyces pastorianus
-aclavatus_eg_gene	Aspergillus clavatus NRRL 1
-aflavus_eg_gene	Aspergillus flavus NRRL3357
+aastaci_eg_gene Saccharomyces pastorianus
+aclavatus_eg_gene   Aspergillus clavatus NRRL 1
+aflavus_eg_gene Aspergillus flavus NRRL3357
 afumigatus_eg_gene	Aspergillus fumigatus Af293
 afumigatusa1163_eg_gene	Aspergillus fumigatus A1163
 agossypii_eg_gene   Ashbya gossypii
 ainvadans_eg_gene	Talaromyces marneffei
 anidulans_eg_gene	Aspergillus nidulans
 aniger_eg_gene	Aspergillus niger
-aoryzae_eg_gene	Aspergillus oryzae RIB40
+aoryzae_eg_gene Aspergillus oryzae RIB40
 aterreus_eg_gene	Aspergillus terreus NIH2624
 bbassiana_eg_gene	Beauveria bassiana
 bcinerea_eg_gene	Botrytis cinerea B05.10
