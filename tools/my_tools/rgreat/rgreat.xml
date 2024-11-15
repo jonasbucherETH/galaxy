@@ -12,7 +12,7 @@
         <requirement type="package" version="0.99.11">bioconductor-biomartgogenesets</requirement>
         <requirement type="package" version="1.54.1">bioconductor-genomicranges</requirement>
         <requirement type="package" version="1.2.11">bioconductor-genomeinfodbdata</requirement>
-        <requirement type="package" version="1.34.0">bioconductor-genomationdata</requirement>
+        <requirement type="package" version="1.34.0">bioconductor-genomation</requirement>
     </requirements>
 
     <required_files>
@@ -26,7 +26,9 @@
     <command detect_errors="exit_code"><![CDATA[
 
         Rscript '$__tool_directory__/rgreat.R'
-        --input '$input'
+        --input_regions '$input_regions'
+        --input_hypo '$input_hypo'
+        --input_hyper '$input_hyper'
         --output_hypo '$output_hypo'
         --output_hyper '$output_hyper'
         --biomart_dataset '$biomart_dataset'
@@ -48,7 +50,12 @@
 
 
     <inputs>
+        <!--
         <param type="data" name="input" format="rds" />
+        -->
+        <param type="data" name="input_regions" label="Candidate Regions" format="tabular" />
+        <param type="data" name="input_hypo" label="Significant Regions - hypo-methylated" format="tabular" />
+        <param type="data" name="input_hyper" label="Significant Regions - hyper-methylated" format="tabular" />
         <param name="cytosine_context" type="select" value="CG" label="Cytosine context" help="Cytosine methylation context to analyse" >
             <option value="CG">C(p)G</option>
             <option value="CHG">CHG</option>
@@ -107,7 +114,9 @@
     </outputs>
     <tests>
         <test>
-            <param name="input" value="dmrseq_output.rdata"/>
+            <param name="input_regions" value="dmRegions.tsv"/>
+            <param name="input_hypo" value="significantRegions_hypo.tsv"/>
+            <param name="input_hyper" value="significantRegions_hyper.tsv"/>
             <param name="cytosine_context" value="CG"/>
             <param name="biomart_dataset" value="hsapiens_gene_ensembl"/>
             <param name="advanced_options" value="true"/>

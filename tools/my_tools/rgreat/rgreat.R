@@ -26,7 +26,7 @@ library("BioMartGOGeneSets")
 library("GenomicFeatures")
 library("biomartr") # for getGO
 library("GenomicRanges")
-# library("genomation") # annotation of DML/R
+library("genomation") # annotation of DML/R; readGeneric (tabular)
 library("GenomeInfoDb")
 
 ### create biomart table/file
@@ -67,7 +67,9 @@ library("GenomeInfoDb")
 # Read the options from the default: commandArgs(TRUE)
 # Define option specification
 option_specification <- matrix(c(
-  'input', 'i', 1, 'character',
+  'input_regions', 'i', 1, 'character',
+  'input_hypo', 'h', 1, 'character',
+  'input_hyper', 'y', 1, 'character',
   'output_hypo', 'o', 1, 'character',
   'output_hyper', 'r', 1, 'character',
   'biomart_dataset', 'b', 1, 'character',
@@ -118,17 +120,21 @@ if (!is.null(exclude)) {
 }
 
 # Load input file (assuming RDS format)
-dmrseq_output <- readRDS(opt$input)
+#dmrseq_output <- readRDS(opt$input)
 
-# Extract necessary data from dmrseq output
-dmRegions <- dmrseq_output$dmRegions
-significantRegions <- dmrseq_output$significantRegions
-significantRegions_hypo <- dmrseq_output$significantRegions_hypo
-significantRegions_hyper <- dmrseq_output$significantRegions_hyper
+dmRegions <- readGeneric(opt$input_regions, skip = 1)
+#significantRegions <- dmrseq_output$significantRegions
+significantRegions_hypo <- readGeneric(opt$input_hypo, skip = 1)
+significantRegions_hyper <- readGeneric(opt$input_hyper, skip = 1)
 
-cat("chr style:", seqlevelsStyle(dmRegions), "\n")
+#dmRegions <- dmrseq_output$dmRegions
+# #significantRegions <- dmrseq_output$significantRegions
+#significantRegions_hypo <- dmrseq_output$significantRegions_hypo
+#significantRegions_hyper <- dmrseq_output$significantRegions_hyper
+
+#cat("chr style:", seqlevelsStyle(dmRegions), "\n")
 seqlevelsStyle(dmRegions) <- "NCBI"
-seqlevelsStyle(significantRegions) <- "NCBI"
+#seqlevelsStyle(significantRegions) <- "NCBI"
 seqlevelsStyle(significantRegions_hypo) <- "NCBI"
 seqlevelsStyle(significantRegions_hyper) <- "NCBI"
 
