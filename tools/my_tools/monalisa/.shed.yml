@@ -1,0 +1,6 @@
+categories:
+- Epigenetics
+description: monaLisa motif finding.
+long_description: 'monaLisa: Identify regulatory motifs.'
+name: monalisa
+owner: jobucher
