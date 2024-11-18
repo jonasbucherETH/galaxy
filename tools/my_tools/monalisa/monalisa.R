@@ -72,14 +72,14 @@ run_monaLisa <- function(significantRegions, meth_type) {
 se_motifs_down <- run_monaLisa(significantRegions_hypo, "down")
 se_motifs_up <- run_monaLisa(significantRegions_hyper, "up")
 
-saveRDS(list(se_motifs_down = se_motifs_down, 
-             se_motifs_up = se_motifs_up
-             ), 
-        # file = opt$output)
-        file = "output.rds")
+#saveRDS(list(se_motifs_down = se_motifs_down, 
+#             se_motifs_up = se_motifs_up
+#             ), 
+#        # file = opt$output)
+#        file = "output.rds")
 
-
-cat("\n input: ", opt$input)
+saveRDS(se_motifs_down, file = opt$output_hypo)
+saveRDS(se_motifs_up, file = opt$output_hyper)
 
 cat("\n Successfully ran monaLisa. \n")
 

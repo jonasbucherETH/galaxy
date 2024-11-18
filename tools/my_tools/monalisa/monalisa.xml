@@ -1,4 +1,4 @@
-<tool id="monaLisa" name="monaLisa motif enrichment analysis" version="0.1.0+galaxy0" profile="21.05">
+<tool id="monaLisa" name="monaLisa motif enrichment analysis" version="1.8.0+galaxy0" profile="21.05">
     <requirements>
         <requirement type="package" version="4.3.0">r-base</requirement>
         <requirement type="package" version="1.20.3">r-getopt</requirement>
@@ -9,6 +9,8 @@
         <requirement type="package" version="2.70.1">bioconductor-biostrings</requirement>
         <requirement type="package" version="1.12.0">bioconductor-biocio</requirement>
         <requirement type="package" version="1.7.5">r-optparse</requirement>
+        <requirement type="package" version="1.8.0">bioconductor-monalisa</requirement>
+        <requirement type="package" version="2.18.0">bioconductor-rsamtools</requirement>
     </requirements>
     <required_files>
         <include path="monalisa.R" />
@@ -38,9 +40,9 @@
             <option value="CHG">CHG</option>
             <option value="CHH">CHH</option>
         </param>
-        <param type="data" name="input_regions" label="Candidate Regions" format="tabular" />
-        <param type="data" name="input_hypo" label="Significant Regions - hypo-methylated" format="tabular" />
-        <param type="data" name="input_hyper" label="Significant Regions - hyper-methylated" format="tabular" />        <param type="data" name="reference_genome" format="fasta" label="Select reference genome" help="Choose the reference genome file from your history for the analysis." />
+        <param name="input_regions" type="data" label="Candidate Regions" format="tabular" />
+        <param name="input_hypo" type="data" label="Significant Regions - hypo-methylated" format="tabular" />
+        <param name="input_hyper" type="data" label="Significant Regions - hyper-methylated" format="tabular" />
         <param name="sample_info_file" type="data" format="tabular" label="Sample information file" help="CSV file with sample characteristics"/>
         <param name="tax_group" type="select" value="plants" label="Taxonomy group" help="Select the taxonomy group.">
             <option value="plants">plants</option>
