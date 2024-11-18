@@ -17,6 +17,7 @@ loc <- Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
 library("getopt")
 library("tools")
 library("data.table")
+library("optparse")
 
 # Tool-specific
 library("rGREAT")
@@ -66,24 +67,28 @@ library("GenomeInfoDb")
 # Get options using the spec as defined by the enclosed list
 # Read the options from the default: commandArgs(TRUE)
 # Define option specification
-option_specification <- matrix(c(
-  'input_regions', 'i', 1, 'character',
-  'input_hypo', 'h', 1, 'character',
-  'input_hyper', 'y', 1, 'character',
-  'output_hypo', 'o', 1, 'character',
-  'output_hyper', 'r', 1, 'character',
-  'biomart_dataset', 'b', 1, 'character',
-  'min_gene_set_size', 's', 2, 'integer',  # Optional
-  'mode', 'm', 2, 'character',  # Optional
-  'basal_upstream', 'u', 2, 'integer',  # Optional
-  'basal_downstream', 'd', 2, 'integer',  # Optional
-  'extend_from', 'f', 2, 'character',  # Optional
-  'extension', 'e', 2, 'integer',  # Optional
-  'exclude', 'x', 2, 'character'  # Optional
-), byrow=TRUE, ncol=4)
+option_list <- list(
+  # Required options
+  make_option("--input_regions", type = "character", help = "Input regions"),
+  make_option("--input_hypo", type = "character", help = "Input hypo"),
+  make_option("--input_hyper", type = "character", help = "Input hyper"),
+  make_option("--output_hypo", type = "character", help = "Output hypo"),
+  make_option("--output_hyper", type = "character", help = "Output hyper"),
+  make_option("--biomart_dataset", type = "character", help = "Biomart dataset"),
+
+  # Optional options
+  make_option("--min_gene_set_size", type = "integer", default = NULL, help = "Minimum gene set size [optional]"),
+  make_option("--mode", type = "character", default = NULL, help = "Mode [optional]"),
+  make_option("--basal_upstream", type = "integer", default = NULL, help = "Basal upstream [optional]"),
+  make_option("--basal_downstream", type = "integer", default = NULL, help = "Basal downstream [optional]"),
+  make_option("--extend_from", type = "character", default = NULL, help = "Extend from [optional]"),
+  make_option("--extension", type = "integer", default = NULL, help = "Extension [optional]"),
+  make_option("--exclude", type = "character", default = NULL, help = "Exclude [optional]")
+)
 
 # Parse options
-opt <- getopt(option_specification)
+parser <- OptionParser(option_list = option_list, add_help_option = FALSE)
+opt <- parse_args(parser)
 
 # Set defaults for parameters if not provided
 min_gene_set_size <- if (!is.null(opt$min_gene_set_size)) opt$min_gene_set_size else 10
