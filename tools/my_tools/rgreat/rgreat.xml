@@ -1,4 +1,4 @@
-<tool id="rgreat" name="Genomic Regions Enrichment of Annotations Tool" version="0.2.0+galaxy0" profile="21.05">
+<tool id="rgreat" name="Genomic Regions Enrichment of Annotations Tool" version="2.4.0+galaxy0" profile="21.05">
     <macros>
         <import>macros.xml</import>
     </macros>
