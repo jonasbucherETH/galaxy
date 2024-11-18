@@ -186,7 +186,7 @@ run_great_analysis <- function(significantRegions, meth_type) {
 
 # Run GREAT analysis for both hypomethylated and hypermethylated regions
 run_great_analysis(significantRegions_hypo, opt$output_hypo)
-run_great_analysis(significantRegions_hyper, opt$output_hypo)
+run_great_analysis(significantRegions_hyper, opt$output_hyper)
 
 # greatFun <- function(dmRegions, significantRegions, type) { # dmType = region / locus
 #   greatResult_BP <- great(gr = significantRegions, gene_sets = "BP", biomart_dataset = param$biomart_selection,
