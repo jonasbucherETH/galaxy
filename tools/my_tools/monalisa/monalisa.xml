@@ -1,4 +1,4 @@
-<tool id="monaLisa" name="monaLisa motif enrichment analysis" version="1.8.0+galaxy0" profile="21.05">
+<tool id="monaLisa" name="monaLisa - MOtif aNAlysis with Lisa" version="1.8.0+galaxy1" profile="21.05">
     <requirements>
         <requirement type="package" version="4.3.0">r-base</requirement>
         <requirement type="package" version="1.20.3">r-getopt</requirement>
@@ -67,7 +67,10 @@
         </test>
     </tests>
     <help><![CDATA[
-    monaLisa help
+    monaLisa - MOtif aNAlysis with Lisa
+
+    In the binned motif enrichment analysis (calcBinnedMotifEnrR), genomic regions are grouped into bins according to a numerical value assigned to each region, such as the change in expression, accessibility or methylation. Motif enrichments are then calculated for each bin, normalizing for differences in sequence composition in a very similar way as originally done by Homer. As a special case, the approach can also be used to do a simple two set comparison (foreground against background sequences), which is the approach implemented in this tool.
+    
     ]]></help>
     <citations>
         <citation type="doi">

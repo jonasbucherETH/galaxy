@@ -33,9 +33,11 @@ option_list <- list(
   make_option("--input_hyper", type = "character", help = "Input hyper"),
   make_option("--output_hypo", type = "character", help = "Output hypo"),
   make_option("--output_hyper", type = "character", help = "Output hyper"),
-  make_option(c("-c", "--cytosine_context"), type = "character", action = "append", help = "Cytosine context"),
+  #make_option(c("-c", "--cytosine_context"), type = "character", action = "append", help = "Cytosine context"),
+  #make_option(c("-t", "--tax_group"), type = "character", action = "append", help = "Taxonomic group"),
+  make_option(c("-c", "--cytosine_context"), type = "character", help = "Cytosine context"),
+  make_option(c("-t", "--tax_group"), type = "character", help = "Taxonomic group"),
   #make_option(c("-q", "--identifier"), type = "character", action = "append", help = "Identifier(s)")
-  make_option(c("-t", "--tax_group"), type = "character", action = "append", help = "Taxonomic group"),
   make_option(c("-u", "--reference_genome"), type = "character", help = "Reference genome"),
   make_option(c("-f", "--sample_info_file"), type = "character", help = "Sample info file")
 )
