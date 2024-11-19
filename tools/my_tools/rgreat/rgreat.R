@@ -68,15 +68,13 @@ library("GenomeInfoDb")
 # Read the options from the default: commandArgs(TRUE)
 # Define option specification
 option_list <- list(
-  # Required options
   make_option("--input_regions", type = "character", help = "Input regions"),
   make_option("--input_hypo", type = "character", help = "Input hypo"),
   make_option("--input_hyper", type = "character", help = "Input hyper"),
   make_option("--output_hypo", type = "character", help = "Output hypo"),
   make_option("--output_hyper", type = "character", help = "Output hyper"),
   make_option("--biomart_dataset", type = "character", help = "Biomart dataset"),
-
-  # Optional options
+  make_option("--cytosine_context", type = "character", help = "Cytosine context"),
   make_option("--min_gene_set_size", type = "integer", default = NULL, help = "Minimum gene set size [optional]"),
   make_option("--mode", type = "character", default = NULL, help = "Mode [optional]"),
   make_option("--basal_upstream", type = "integer", default = NULL, help = "Basal upstream [optional]"),

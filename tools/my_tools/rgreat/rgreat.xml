@@ -33,6 +33,7 @@
         --output_hypo '$output_hypo'
         --output_hyper '$output_hyper'
         --biomart_dataset '$biomart_dataset'
+        --cytosine_context '$cytosine_context'
         #if $advanced_parameters.advanced_options
             --min_gene_set_size $advanced_parameters.min_gene_set_size
             --mode $advanced_parameters.gene_extension_mode.mode
@@ -133,7 +134,23 @@
         </test>
     </tests>
     <help><![CDATA[
-        scream for help
+        GREAT (Genomic Regions Enrichment of Annotations Tool) is a type of functional enrichment analysis directly performed on genomic regions. This tools implements the GREAT algorithm (the local GREAT analysis). rGREAT by default supports more than 600 organisms and a large number of gene set collections, as well as self-provided gene sets and organisms from users. Additionally, it implements a general method for dealing with background regions.
+
+        min_gene_set_size: Minimal size of gene sets.
+
+        mode: The mode to extend genes. Value should be one of 'basalPlusExt', 'twoClosest' and 'oneClosest'.
+
+        extend_from: Should the gene be extended only from its TSS or the complete gene?
+
+        basal_upstream: In 'basalPlusExt' mode, number of base pairs extending to the upstream of TSS to form the basal domains.
+
+        basal_downstream: In 'basalPlusExt' mode, number of base pairs extending to the downstream of TSS to form the basal domains.
+
+        extension: Extensions from the basal domains.
+
+        background: Background regions. The value can also be a vector of chromosome names.
+
+        exclude: Regions that are excluded from analysis such as gap regions (which can be get by getGapFromUCSC). The value can also be a vector of chromosome names. It also allows a special character value "gap" so that gap regions for corresponding organism will be removed from the analysis.
 
     ]]></help>
     <citations>
