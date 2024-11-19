@@ -241,7 +241,6 @@
         <option value="sbboliviensis_gene_ensembl">Bolivian squirrel monkey genes (SaiBol1.0)</option>
         <option value="scanaria_gene_ensembl">Common canary genes (SCA1)</option>
         <option value="scaustralis_gene_ensembl">African ostrich genes (ASM69896v1)</option>
-        <option value="scerevisiae_gene_ensembl">Saccharomyces cerevisiae genes (R64-1-1)</option>
         <option value="sdumerili_gene_ensembl">Greater amberjack genes (Sdu_1.0)</option>
         <option value="sformosus_gene_ensembl">Asian bonytongue genes (fSclFor1.1)</option>
         <option value="sgrahami_gene_ensembl">Golden-line barbel genes (SAMN03320097.WGS_v1.1)</option>
@@ -376,7 +375,6 @@
         <option value="dggca004324835v1_eg_gene">Dendronephthya gigantea (Carnation coral, DGI-Jeju-01) genes (DenGig_1.0)</option>
         <option value="dggca904063045v1_eg_gene">Dimorphilus gyrociliatus (Segmented worms) genes (Dgyrociliatus_assembly)</option>
         <option value="dgrimshawi_eg_gene">Drosophila grimshawi (Fruit fly, TSC#15287-2541.00) genes (dgri_caf1)</option>
-        <option value="dmelanogaster_eg_gene">Drosophila melanogaster (Fruit fly) genes (BDGP6.46)</option>
         <option value="dmgca020631705v2_eg_gene">Daphnia magna (Fresh water planktonic, NIES) genes (ASM2063170v1.1)</option>
         <option value="dmojavensis_eg_gene">Drosophila mojavensis (Fruit fly, TSC#15081-1352.22) genes (dmoj_caf1)</option>
         <option value="dngca001186385v1_eg_gene">Diuraphis noxia (Russian wheat aphid, RWA2) genes (Dnoxia_1.0)</option>
@@ -718,5 +716,5 @@
         <option value="tgondii_eg_gene">Toxoplasma gondii ME49 genes (TGA4)</option>
         <option value="tpseudonana_eg_gene">Thalassiosira pseudonana genes (ASM14940v2)</option>
         <option value="tthermophila_eg_gene">Tetrahymena thermophila genes (JCVI-TTA1-2.2)</option>
-    </xml>
+    </xml>  
 </macros>
