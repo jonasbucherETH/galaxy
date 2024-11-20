@@ -4,3 +4,4 @@ description: monaLisa motif finding.
 long_description: 'monaLisa: Identify regulatory motifs.'
 name: monalisa
 owner: jobucher
+remote_repository_url: https://github.com/jonasbucherETH/galaxy/blob/dev/tools/my_tools/monalisa/.shed.yml
