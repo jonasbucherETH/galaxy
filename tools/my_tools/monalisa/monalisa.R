@@ -26,6 +26,7 @@ library("rtracklayer")
 library("Rsamtools")
 library("monaLisa")
 library("BSgenome")
+library("genomation") # readGeneric (tabular)
 
 option_list <- list(
   make_option("--input_regions", type = "character", help = "Input regions"),
@@ -46,7 +47,7 @@ option_list <- list(
 parser <- OptionParser(option_list = option_list)
 opt <- parse_args(parser)
 
-dmrseq_output <- readRDS(opt$input)
+#dmrseq_output <- readRDS(opt$input)
 
 # Extract necessary data from dmrseq output
 dmRegions <- readGeneric(opt$input_regions, skip = 1)
