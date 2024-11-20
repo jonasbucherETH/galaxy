@@ -1,4 +1,4 @@
-<tool id="dmrseq" name="dmrseq: Differentially methylated regions analysis" version="0.1.0+galaxy0" profile="21.05">
+<tool id="dmrseq" name="dmrseq: Differentially methylated regions analysis" version="1.22.0+galaxy0" profile="21.05">
     <requirements>
         <requirement type="package" version="4.3.0">r-base</requirement>
         <requirement type="package" version="1.20.3">r-getopt</requirement>
@@ -34,6 +34,7 @@
         --tabular_regions '$tabular_regions'
         --tabular_hypo '$tabular_hypo'
         --tabular_hyper '$tabular_hyper'
+        --bsseq_object '$bsseq_object'
 
         #if '$advanced_options' == 'true':
             #if '$minNumRegion' != '':
@@ -206,7 +207,8 @@
         <data name="tabular_regions" format="tabular" label="${tool.name} on ${on_string}: All regions (TSV)"/>
         <data name="tabular_hypo" format="tabular" label="${tool.name} on ${on_string}: Hypomethylated regions (TSV)"/>
         <data name="tabular_hyper" format="tabular" label="${tool.name} on ${on_string}: Hypermethylated regions (TSV)"/>
-        
+        <data name="bsseq_object" format="rds" label="${tool.name} on ${on_string}: BSseq Object"/>
+
         <!-- 
         <data name="dmr_results" format="tabular" label="${tool.name} on ${on_string}: DMR results"/>
         <data name="summary_stats" format="tabular" label="${tool.name} on ${on_string}: Summary statistics"/>
@@ -226,6 +228,7 @@
             <output name="tabular_regions" file="tabular_regions.tsv"/>
             <output name="tabular_hypo" file="tabular_hypo.tsv"/>
             <output name="tabular_hyper" file="tabular_hyper.tsv"/>
+            <output name="bsseq_object" file="bsseq_object.rds"/>
         </test>
     </tests>
     <help><![CDATA[

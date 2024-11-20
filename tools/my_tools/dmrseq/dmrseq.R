@@ -62,10 +62,11 @@ option_list <- list(
   
   # Options with default values (optional arguments)
   make_option(c("-a", "--adjust_covariate"), type = "character", default = NULL, help = "Adjust covariate [optional]"),
-  make_option(c("-c", "--cutoff"), type = "double", default = NULL, help = "Cutoff [optional]"),
-  make_option("--tabular_regions", type = "character", default = NULL, help = "tsv regions [optional]"),
-  make_option("--tabular_hypo", type = "character", default = NULL, help = "tsv hypo [optional]"),
-  make_option("--tabular_hyper", type = "character", default = NULL, help = "tsv hyper [optional]"),
+  make_option(c("-c", "--cutoff"), type = "double", default = NULL, help = "Cutoff"),
+  make_option("--tabular_regions", type = "character", default = NULL, help = "tsv regions"),
+  make_option("--tabular_hypo", type = "character", default = NULL, help = "tsv hypo"),
+  make_option("--tabular_hyper", type = "character", default = NULL, help = "tsv hyper"),
+  make_option("--bsseq_object", type = "character", default = NULL, help = "bsseq_object"),
 
   # Advanced parameters (optional arguments)
   make_option(c("-n", "--minNumRegion"), type = "integer", default = NULL, help = "Minimum number of regions [optional]"),
@@ -405,6 +406,8 @@ saveRDS(list(bs_combined = bs_combined,
              ), 
         # file = opt$output)
         file = "output.rds")
+
+saveRDS(bs_filtered, file=opt$bsseq_object)
 
 # write.csv(dmrs, "dmr_results.csv", row.names = FALSE)
 # write.csv(summary_stats, "summary_stats.csv", row.names = FALSE)
