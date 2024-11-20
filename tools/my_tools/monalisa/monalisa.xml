@@ -45,6 +45,7 @@
         <param name="input_hypo" type="data" label="Significant Regions - hypo-methylated" format="tabular" />
         <param name="input_hyper" type="data" label="Significant Regions - hyper-methylated" format="tabular" />
         <param name="sample_info_file" type="data" format="tabular" label="Sample information file" help="CSV file with sample characteristics"/>
+        <param name="reference_genome" type="data" format="fasta,fasta.gz" label="Reference Genome File" help="Reference Genome File in Fasta format"/>
         <param name="tax_group" type="select" value="plants" label="Taxonomy group" help="Select the taxonomy group.">
             <option value="plants">plants</option>
             <option value="vertebrates">vertebrates</option>
