@@ -5,4 +5,4 @@ long_description: 'rGREAT: Genomic Regions Enrichment of Annotations Tool. Funct
   enrichment analysis directly performed on genomic regions.'
 name: rgreat
 owner: jobucher
-remote_repository_url: https://github.com/jonasbucherETH/galaxy/blob/dev/tools/my_tools/rgreat/.shed.yml
+remote_repository_url: https://github.com/jonasbucherETH/galaxy/tree/dev/tools/my_tools/rgreat/.shed.yml
