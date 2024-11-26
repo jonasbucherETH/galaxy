@@ -89,8 +89,8 @@ parser <- OptionParser(option_list = option_list, add_help_option = FALSE)
 opt <- parse_args(parser)
 
 # Set defaults for parameters if not provided
-min_gene_set_size <- if (!is.null(opt$min_gene_set_size)) opt$min_gene_set_size else 10
-mode <- if (!is.null(opt$mode)) opt$mode else 'twoClosest'
+min_gene_set_size <- if (!is.null(opt$min_gene_set_size)) opt$min_gene_set_size else 5
+mode <- if (!is.null(opt$mode)) opt$mode else 'basalPlusExt'
 extend_from <- if (!is.null(opt$extend_from)) opt$extend_from else 'TSS'
 extension <- if (!is.null(opt$extension)) opt$extension else 1000000
 
@@ -107,20 +107,20 @@ if (mode == 'basalPlusExt') {
 exclude <- if (!is.null(opt$exclude)) opt$exclude else NULL
 
 # Debugging: Print options to verify
-cat("Input:", opt$input, "\n")
-cat("Output:", opt$output, "\n")
-cat("BioMart Dataset:", opt$biomart_dataset, "\n")
-cat("Min Gene Set Size:", min_gene_set_size, "\n")
-cat("Mode:", mode, "\n")
-if (mode == 'basalPlusExt') {
-  cat("Basal Upstream:", basal_upstream, "\n")
-  cat("Basal Downstream:", basal_downstream, "\n")
-}
-cat("Extend From:", extend_from, "\n")
-cat("Extension:", extension, "\n")
-if (!is.null(exclude)) {
-  cat("Exclude Regions:", exclude, "\n")
-}
+#cat("Input:", opt$input, "\n")
+#cat("Output:", opt$output, "\n")
+#cat("BioMart Dataset:", opt$biomart_dataset, "\n")
+#cat("Min Gene Set Size:", min_gene_set_size, "\n")
+#cat("Mode:", mode, "\n")
+#if (mode == 'basalPlusExt') {
+#  cat("Basal Upstream:", basal_upstream, "\n")
+#  cat("Basal Downstream:", basal_downstream, "\n")
+#}
+#cat("Extend From:", extend_from, "\n")
+#cat("Extension:", extension, "\n")
+#if (!is.null(exclude)) {
+#  cat("Exclude Regions:", exclude, "\n")
+#}
 
 # Load input file (assuming RDS format)
 #dmrseq_output <- readRDS(opt$input)

@@ -83,7 +83,7 @@
                 <option value="true">Yes</option>
             </param>      
             <when value="true">
-                <param name="min_gene_set_size" type="integer" value="10" min="1" label="Minimal size of gene sets" help="Minimal size of gene sets to be considered in the analysis." />
+                <param name="min_gene_set_size" type="integer" value="5" min="1" label="Minimal size of gene sets" help="Minimal size of gene sets to be considered in the analysis." />
                 <conditional name="gene_extension_mode">
                     <param name="mode" type="select" label="Mode to extend genes">
                         <option value="basalPlusExt">Basal Plus Extension</option>
@@ -98,8 +98,8 @@
                     <when value="oneClosest" />
                 </conditional>
                 <param name="extend_from" type="select" label="Extend gene from">
-                    <option value="tss">TSS only</option>
-                    <option value="complete">Complete gene</option>
+                    <option value="TSS">TSS only</option>
+                    <option value="gene">Complete gene</option>
                 </param>
                 <param name="extension" type="integer" value="1000000" min="0" label="Extension from basal domains" help="Extensions from the basal domains." />    
                 <param name="exclude" type="text" area="true" optional="true" label="Excluded regions" help="Regions that are excluded from analysis such as gap regions. The value can also be a vector of chromosome names. Use 'gap' to remove gap regions for the corresponding organism." >
@@ -123,13 +123,13 @@
             <param name="cytosine_context" value="CG"/>
             <param name="biomart_dataset" value="hsapiens_gene_ensembl"/>
             <param name="advanced_options" value="true"/>
-            <param name="min_gene_set_size" value="15"/>
+            <param name="min_gene_set_size" value="5"/>
             <param name="mode" value="basalPlusExt"/>
             <param name="basal_upstream" value="5000"/>
             <param name="basal_downstream" value="1000"/>
-            <param name="extend_from" value="tss"/>
+            <param name="extend_from" value="TSS"/>
             <param name="extension" value="1000000"/>
-            <param name="exclude" value="gap"/>
+            <param name="exclude" value=""/>
             <output name="output_hypo" file="output_hypo.rds"/>
             <output name="output_hyper" file="output_hyper.rds"/>
         </test>
