@@ -9,6 +9,7 @@
         <requirement type="package" version="1.15.4">r-data.table</requirement>
         <requirement type="package" version="2.4.0">bioconductor-rgreat</requirement>
         <requirement type="package" version="1.42.0">bioconductor-keggrest</requirement>
+        <requirement type="package" version="2.58.0">bioconductor-biomart</requirement>
         <requirement type="package" version="1.0.7">r-biomartr</requirement>
         <requirement type="package" version="0.99.11">bioconductor-biomartgogenesets</requirement>
         <requirement type="package" version="1.54.1">bioconductor-genomicranges</requirement>
@@ -111,8 +112,8 @@
         </conditional>
     </inputs>
     <outputs>
-        <data name="output_hypo" format="rds" label="Output hypo-methyla: ${cytosine_context} context" />
-        <data name="output_hyper" format="rds" label="Output hyper: ${cytosine_context} context" />
+        <data name="output_hypo" format="rds, rdata" label="Output hypo-methyla: ${cytosine_context} context" />
+        <data name="output_hyper" format="rds, rdata" label="Output hyper: ${cytosine_context} context" />
     </outputs>
     <tests>
         <test>
