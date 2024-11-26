@@ -4,4 +4,4 @@ description: 'dmrseq: Differentially methylated regions analysis'
 long_description: Differentially methylated regions analysis using the R package dmrseq.
 name: dmrseq
 owner: jobucher
-remote_repository_url: https://github.com/jonasbucherETH/galaxy/tree/dev/tools/my_tools/dmrseq
+remote_repository_url: https://github.com/jonasbucherETH/galaxy/tree/dev/tools/my_tools/dmrseq/.shed.yml
