@@ -1,4 +1,4 @@
-<tool id="dmrseq" name="dmrseq: Differentially methylated regions analysis" version="1.22.0+galaxy0" profile="21.05">
+<tool id="dmrseq" name="dmrseq: Differentially methylated regions analysis" version="1.22.0+galaxy1" profile="21.05">
     <requirements>
         <requirement type="package" version="4.3.0">r-base</requirement>
         <requirement type="package" version="1.20.3">r-getopt</requirement>
@@ -124,7 +124,7 @@
             <option value="CHG">CHG</option>
             <option value="CHH">CHH</option>
         </param>
-        <param name="coverage_files" type="data" multiple="true" format="tabular.gz,tabular,txt,txt.gz" label="Bismark coverage files" help="Collection of coverage files from Bismark methylation extractor" />
+        <param name="coverage_files" type="data" multiple="true" format="tabular.gz,tabular,txt,gz" label="Bismark coverage files" help="Collection of coverage files from Bismark methylation extractor" />
         <!--
         <param name="coverage_files" type="data_collection" collection_type="list" label="Input Files Collection" />
         
